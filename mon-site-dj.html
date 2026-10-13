@@ -1,0 +1,2173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+<meta name="theme-color" content="#06060a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Levon & Dinato">
+<meta name="format-detection" content="telephone=no">
+<title>Levon & Dinato — Funky House Architects</title>
+<meta name="description" content="Levon & Dinato — Duo de Funky House, Nu-Disco et Tech House. Écoutez nos tracks et bookez le duo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06060a;
+    --bg-2: #0a0a12;
+    --text: #f4f2f8;
+    --muted: #6b6880;
+    --line: rgba(255,255,255,.08);
+    --line-strong: rgba(255,255,255,.18);
+    --gold: #d4af7a;
+    --gold-2: #e0b57c;
+    --pink: #ec4899;
+    --violet: #8b5cf6;
+    --cyan: #22d3ee;
+    --grad-gold: linear-gradient(120deg, #d4af7a, #e0b57c 45%, #ec4899);
+    --font-display: 'Anton', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(.7, 0, .2, 1);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --nav-h: 68px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overscroll-behavior-y: none;
+    touch-action: manipulation;
+  }
+
+  body.loading { overflow: hidden; }
+  a, button { cursor: none; color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+  ::selection { background: var(--gold); color: #06060a; }
+
+  /* ============ DÉTECTION TACTILE ============ */
+  @media (hover: none) and (pointer: coarse) {
+    body, a, button, input, textarea { cursor: auto !important; }
+    .cursor, .cursor-follow { display: none !important; }
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(212,175,122,.35); border-radius: 10px; }
+
+  /* ================= PRELOADER ================= */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: calc(32px + var(--safe-top)) 5% calc(32px + var(--safe-bottom));
+    transition: transform 1s cubic-bezier(.7,0,.2,1);
+  }
+  .preloader.done { transform: translateY(-100%); }
+  .pre-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    gap: 12px;
+  }
+  .pre-center { flex: 1; display: flex; align-items: center; justify-content: center; }
+  .pre-logo {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 12vw, 9rem);
+    line-height: .9;
+    text-align: center;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+  }
+  .pre-logo .grad {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .pre-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .pre-counter {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 4rem);
+    line-height: 1;
+    color: var(--text);
+  }
+  .pre-bar { flex: 1; max-width: 200px; height: 1px; background: var(--line-strong); position: relative; overflow: hidden; }
+  .pre-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: var(--gold);
+    transition: width .3s linear;
+  }
+
+  /* ================= CURSEUR (desktop) ================= */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .3s var(--ease), height .3s var(--ease);
+    mix-blend-mode: difference;
+  }
+  .cursor-follow {
+    position: fixed;
+    width: 44px; height: 44px;
+    border: 1px solid rgba(212,175,122,.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width .4s var(--ease), height .4s var(--ease), background .3s;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: .58rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .cursor.hover { width: 5px; height: 5px; }
+  .cursor-follow.hover { width: 78px; height: 78px; background: var(--gold); border-color: var(--gold); }
+
+  /* ================= GRAIN ================= */
+  .grain {
+    position: fixed;
+    inset: -50%;
+    pointer-events: none;
+    z-index: 200;
+    opacity: .055;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 8s steps(10) infinite;
+  }
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    10% { transform: translate(-5%,-10%); }
+    30% { transform: translate(3%,-15%); }
+    50% { transform: translate(-10%,5%); }
+    70% { transform: translate(0,10%); }
+    90% { transform: translate(-5%,5%); }
+  }
+
+  /* ================= SCROLL PROGRESS ================= */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--grad-gold);
+    z-index: 500;
+    transition: width .1s linear;
+  }
+
+  /* ================= NAV ================= */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    padding: calc(20px + var(--safe-top)) 5% 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding .4s, background .4s, backdrop-filter .4s;
+    padding-left: calc(5% + var(--safe-left));
+    padding-right: calc(5% + var(--safe-right));
+  }
+  .nav.scrolled {
+    padding-top: calc(12px + var(--safe-top));
+    padding-bottom: 12px;
+    background: rgba(6,6,10,.82);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border-bottom: 1px solid var(--line);
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .logo-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--gold);
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(.6); }
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 12px 0;
+    display: block;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; left: 0;
+    width: 100%; height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .5s var(--ease);
+  }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-time {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .btn-booker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background: var(--gold);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: .7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 100px;
+    transition: transform .3s;
+    min-height: 44px;
+  }
+  .btn-booker:active { transform: scale(.97); }
+  .btn-booker svg { width: 13px; height: 13px; }
+
+  /* Burger */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 46px; height: 46px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(6,6,10,.5);
+    backdrop-filter: blur(10px);
+    transition: background .3s;
+    z-index: 1100;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .burger:active { background: rgba(212,175,122,.15); }
+  .burger span {
+    display: block;
+    width: 15px; height: 1.5px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform .4s var(--ease), opacity .3s;
+  }
+  .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ================= MENU FULLSCREEN ================= */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: calc(100px + var(--safe-top)) 7% calc(40px + var(--safe-bottom));
+    clip-path: circle(0% at calc(100% - 60px) calc(60px + var(--safe-top)));
+    transition: clip-path .85s var(--ease);
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .menu.open {
+    clip-path: circle(150% at calc(100% - 60px) calc(60px + var(--safe-top)));
+    pointer-events: auto;
+  }
+  .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .menu-list a {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 9vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    display: block;
+    padding: 10px 0;
+    transform: translateY(60px);
+    opacity: 0;
+    transition: color .3s;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .menu.open .menu-list a { animation: menuIn .7s var(--ease) forwards; }
+  .menu.open .menu-list li:nth-child(1) a { animation-delay: .2s; }
+  .menu.open .menu-list li:nth-child(2) a { animation-delay: .26s; }
+  .menu.open .menu-list li:nth-child(3) a { animation-delay: .32s; }
+  .menu.open .menu-list li:nth-child(4) a { animation-delay: .38s; }
+  .menu.open .menu-list li:nth-child(5) a { animation-delay: .44s; }
+  .menu.open .menu-list li:nth-child(6) a { animation-delay: .50s; }
+  @keyframes menuIn { to { transform: translateY(0); opacity: 1; } }
+  .menu-list a:active { color: var(--gold); }
+  .menu-list a span {
+    font-family: var(--font-mono);
+    font-size: .65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+  .menu-footer {
+    margin-top: 40px;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .menu-footer a:active { color: var(--gold); }
+
+  /* ================= HERO ================= */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: calc(var(--nav-h) + 40px + var(--safe-top)) 6% calc(60px + var(--safe-bottom));
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .bg-video {
+    position: absolute;
+    top: 50%; left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto; height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -2;
+    opacity: 1;
+    filter: saturate(1.1) contrast(1.05) brightness(1.05);
+    pointer-events: none;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(139,92,246,.16), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(212,175,122,.10), transparent 55%),
+      linear-gradient(180deg, rgba(6,6,10,.30) 0%, rgba(6,6,10,.25) 40%, rgba(6,6,10,.95) 100%);
+    pointer-events: none;
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    position: relative;
+    z-index: 2;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-top .live { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); }
+  .hero-top .live span {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--gold);
+    animation: pulse 1.5s infinite;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 15vw, 12rem);
+    line-height: .85;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 20px;
+  }
+  .hero-title .line { display: block; overflow: hidden; padding-bottom: .04em; }
+  .hero-title .char { display: inline-block; transform: translateY(105%); will-change: transform; }
+  .hero-title.on .char { animation: charUp .9s var(--ease) forwards; }
+  @keyframes charUp { to { transform: translateY(0); } }
+  .hero-title .line:nth-child(1) .char { animation-delay: calc(var(--i) * .03s + .1s); }
+  .hero-title .line:nth-child(2) .char { animation-delay: calc(var(--i) * .03s + .35s); }
+  .hero-title .line:nth-child(3) .char { animation-delay: calc(var(--i) * .03s + .6s); }
+  .hero-title .grad {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 6px 20px rgba(0,0,0,.7));
+  }
+  .hero-title .outline {
+    -webkit-text-stroke: 1.2px var(--gold);
+    color: transparent;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,.8));
+  }
+  .hero-title .solid { color: var(--text); text-shadow: 0 6px 30px rgba(0,0,0,.7); }
+
+  .hero-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .hero-desc {
+    max-width: 500px;
+    color: #d8d4e2;
+    font-size: .92rem;
+    line-height: 1.7;
+    text-shadow: 0 2px 20px rgba(0,0,0,.9);
+  }
+  .hero-desc strong { color: #fff; font-weight: 600; }
+
+  .visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 36px;
+  }
+  .visualizer span {
+    display: block;
+    width: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: eq 1s ease-in-out infinite;
+  }
+  .visualizer span:nth-child(1) { animation-delay: .0s; height: 20%; }
+  .visualizer span:nth-child(2) { animation-delay: .1s; height: 60%; }
+  .visualizer span:nth-child(3) { animation-delay: .2s; height: 100%; }
+  .visualizer span:nth-child(4) { animation-delay: .3s; height: 40%; }
+  .visualizer span:nth-child(5) { animation-delay: .1s; height: 80%; }
+  .visualizer span:nth-child(6) { animation-delay: .25s; height: 30%; }
+  .visualizer span:nth-child(7) { animation-delay: .15s; height: 70%; }
+  .visualizer span:nth-child(8) { animation-delay: .35s; height: 50%; }
+  .visualizer span:nth-child(9) { animation-delay: .05s; height: 90%; }
+  .visualizer span:nth-child(10) { animation-delay: .2s; height: 25%; }
+  @keyframes eq {
+    0%,100% { transform: scaleY(.3); }
+    50% { transform: scaleY(1); }
+  }
+
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    text-shadow: 0 2px 10px rgba(0,0,0,.9);
+    opacity: .7;
+  }
+  .hero-scroll .line-v {
+    width: 44px; height: 1px;
+    background: rgba(255,255,255,.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-scroll .line-v::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -44px;
+    width: 44px; height: 1px;
+    background: var(--gold);
+    animation: slideX 2.2s var(--ease) infinite;
+  }
+  @keyframes slideX {
+    0% { left: -44px; }
+    100% { left: 44px; }
+  }
+
+  /* ================= MARQUEE ================= */
+  .marquee {
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    display: flex;
+    background: var(--bg-2);
+    user-select: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 40px;
+    padding-right: 40px;
+    animation: scroll 28s linear infinite;
+    flex-shrink: 0;
+    align-items: center;
+  }
+  .marquee-track span {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 5vw, 2.6rem);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,.28);
+    white-space: nowrap;
+  }
+  .marquee-track span.gold { color: var(--gold); -webkit-text-stroke: 0; }
+  .marquee-track .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pink);
+    flex-shrink: 0;
+  }
+  @keyframes scroll { to { transform: translateX(-100%); } }
+
+  /* ================= SECTION ================= */
+  .section {
+    padding: 90px 6%;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: .7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 9vw, 5.5rem);
+    line-height: .95;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .section-header h2 .grad {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ================= ABOUT ================= */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    max-width: 420px;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1a0f2e, #0a0a12);
+    border: 1px solid var(--line);
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(139,92,246,.45), transparent 55%),
+      radial-gradient(circle at 70% 80%, rgba(212,175,122,.28), transparent 55%);
+  }
+  .about-visual .disc {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 65%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: repeating-radial-gradient(circle, #0a0a12 0 7px, #1a1a2e 7px 9px);
+    box-shadow: 0 0 70px rgba(139,92,246,.5), inset 0 0 50px rgba(0,0,0,.95);
+    animation: spin 14s linear infinite;
+    display: grid;
+    place-items: center;
+  }
+  .about-visual .disc::after {
+    content: '';
+    width: 28%; height: 28%;
+    border-radius: 50%;
+    background: var(--grad-gold);
+    box-shadow: 0 0 50px rgba(212,175,122,.75);
+  }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+  .about-visual .corner-tag {
+    position: absolute;
+    top: 16px; left: 16px;
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    z-index: 2;
+    padding: 6px 12px;
+    border: 1px solid rgba(212,175,122,.3);
+    border-radius: 100px;
+    background: rgba(6,6,10,.5);
+    backdrop-filter: blur(10px);
+  }
+  .about-content p {
+    color: #9b97ad;
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+  .about-content p strong { color: var(--text); font-weight: 600; }
+  .about-content p .gold { color: var(--gold); font-weight: 600; }
+  .duo-members {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 30px 0;
+  }
+  .member {
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: rgba(255,255,255,.015);
+    transition: border-color .4s, background .4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .member:active {
+    border-color: rgba(212,175,122,.4);
+    background: rgba(212,175,122,.05);
+  }
+  .member-num {
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .member h4 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: .5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .member p { font-size: .83rem; margin: 0; line-height: 1.6; color: var(--muted); }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 36px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+  }
+  .stat b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 8vw, 2.8rem);
+    line-height: 1;
+    color: var(--gold);
+    letter-spacing: -1px;
+  }
+  .stat span {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: .6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ================= SERVICES ================= */
+  .services-list { border-top: 1px solid var(--line); }
+  .service-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: padding-left .4s var(--ease);
+    cursor: pointer;
+  }
+  .service-row:active { padding-left: 16px; }
+  .service-row:active .service-arrow-big {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    transform: rotate(-45deg);
+  }
+  .service-row:active .service-name {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .service-num {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+  .service-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 6vw, 2.4rem);
+    line-height: 1;
+    letter-spacing: -.5px;
+    text-transform: uppercase;
+    transition: all .3s;
+  }
+  .service-desc { color: var(--muted); font-size: .85rem; line-height: 1.6; }
+  .service-arrow-big {
+    width: 44px; height: 44px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    transition: all .4s var(--ease);
+    align-self: flex-start;
+  }
+
+  /* ================= LISTEN / PLAYER ================= */
+  .listen-section {
+    background: linear-gradient(180deg, transparent, rgba(212,175,122,.02) 50%, transparent);
+  }
+  .player-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    width: 100%;
+    background: rgba(255,255,255,.02);
+  }
+  .player-tab {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: all .3s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    min-height: 44px;
+  }
+  .player-tab .tab-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .5;
+  }
+  .player-tab.active {
+    background: var(--gold);
+    color: var(--bg);
+  }
+  .player-tab.active .tab-dot { opacity: 1; background: var(--bg); }
+
+  .player-container {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0d0d17, #06060a);
+    min-height: 400px;
+  }
+  .player-panel {
+    display: none;
+    padding: 20px 16px;
+    animation: fadePanel .4s ease;
+  }
+  .player-panel.active { display: block; }
+  @keyframes fadePanel {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  .player-panel-head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .player-panel-head h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 5vw, 1.9rem);
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    line-height: 1.05;
+  }
+  .player-panel-head h3 .grad {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .player-panel-head p {
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .player-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all .3s;
+    min-height: 44px;
+    align-self: flex-start;
+  }
+  .player-link:active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--bg);
+  }
+  .player-link svg { width: 12px; height: 12px; }
+
+  .embed-wrap {
+    border-radius: 6px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+  }
+  .embed-wrap iframe {
+    display: block;
+    width: 100% !important;
+    border: 0;
+  }
+
+  .autoplay-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border: 1px solid rgba(212,175,122,.2);
+    border-radius: 6px;
+    background: rgba(212,175,122,.03);
+    font-family: var(--font-mono);
+    font-size: .65rem;
+    letter-spacing: 1px;
+    line-height: 1.55;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .autoplay-note svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ================= RELEASES ================= */
+  .releases-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .release {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: border-color .3s, transform .3s;
+    display: block;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .release:active { border-color: var(--gold); transform: scale(.98); }
+  .release-cover {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: saturate(.9) brightness(.85);
+  }
+  .release-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6,6,10,.95) 0%, transparent 55%);
+    z-index: 1;
+  }
+  .release-info {
+    position: absolute;
+    left: 18px; right: 18px; bottom: 18px;
+    z-index: 2;
+  }
+  .release-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: .6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .release-info h4 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.1;
+    letter-spacing: .3px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .release-info p { font-size: .72rem; color: var(--muted); letter-spacing: .4px; }
+  .release-play {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--bg);
+    display: grid;
+    place-items: center;
+    font-size: .95rem;
+    z-index: 2;
+    border: none;
+    transition: transform .3s;
+    box-shadow: 0 6px 20px rgba(0,0,0,.4);
+  }
+  .release:active .release-play { transform: scale(.9); }
+
+  .release-list {
+    border-top: 1px solid var(--line);
+    margin-top: 40px;
+  }
+  .release-row {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: padding-left .3s;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 60px;
+  }
+  .release-row:active { padding-left: 14px; }
+  .release-row:active .rl-title { color: var(--gold); }
+  .rl-num { font-family: var(--font-mono); font-size: .68rem; color: var(--muted); letter-spacing: 1.2px; }
+  .rl-title { font-size: .95rem; font-weight: 600; letter-spacing: -.2px; margin-bottom: 4px; }
+  .rl-sub { font-family: var(--font-mono); font-size: .62rem; letter-spacing: 1.2px; color: var(--muted); text-transform: uppercase; }
+  .rl-tag {
+    display: none;
+  }
+  .rl-arrow {
+    font-size: 1rem;
+    color: var(--muted);
+    transition: transform .3s;
+    width: 20px;
+    text-align: center;
+  }
+  .release-row:active .rl-arrow { color: var(--gold); transform: translateX(4px); }
+
+  .releases-cta { display: flex; justify-content: center; margin-top: 40px; }
+
+  /* ================= EVENTS ================= */
+  .events-list { border-top: 1px solid var(--line); }
+  .event-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .event-row:active .event-book {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+  .event-date { display: flex; align-items: baseline; gap: 8px; }
+  .event-date b {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .event-date span {
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .event-info h3 { font-size: 1.15rem; font-weight: 600; letter-spacing: -.2px; margin-bottom: 6px; }
+  .event-info p { font-family: var(--font-mono); font-size: .68rem; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+  .event-loc { font-family: var(--font-mono); font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .event-book {
+    padding: 12px 24px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all .3s;
+    align-self: flex-start;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ================= GALLERY ================= */
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .g-item {
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    border: 1px solid var(--line);
+    transition: border-color .3s;
+    background: linear-gradient(135deg, #1a0f2e, #0a0a12);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .g-item:active { border-color: var(--gold); }
+  .g-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6,6,10,.85), transparent 55%);
+    z-index: 1;
+  }
+  .g-inner {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .g-cap {
+    position: absolute;
+    bottom: 16px; left: 16px;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: .64rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .g1 .g-inner { background: linear-gradient(135deg, #2b1055, #8b5cf6, #d4af7a); }
+  .g2 .g-inner { background: linear-gradient(135deg, #ec4899, #f97316); }
+  .g3 .g-inner { background: linear-gradient(135deg, #22d3ee, #0ea5e9); }
+  .g4 .g-inner { background: linear-gradient(135deg, #d4af7a, #84cc16); }
+  .g5 .g-inner { background: linear-gradient(135deg, #8b5cf6, #22d3ee); }
+
+  /* ================= CONTACT ================= */
+  .contact {
+    padding: 90px 6% calc(70px + var(--safe-bottom));
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100vw; max-width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212,175,122,.1), transparent 65%);
+    filter: blur(70px);
+    pointer-events: none;
+  }
+  .contact-tag {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 30px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+  .contact h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 13vw, 8rem);
+    line-height: .9;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40px;
+  }
+  .contact h2 .grad {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .contact h2 .outline { -webkit-text-stroke: 1px var(--gold); color: transparent; }
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: .88rem;
+    padding: 16px 24px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    transition: all .3s;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+    margin-bottom: 40px;
+    word-break: break-all;
+    max-width: 100%;
+    min-height: 52px;
+  }
+  .contact-email:active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--bg);
+  }
+  .contact-email svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .contact-socials {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: all .3s;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .social:active {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    transform: scale(.97);
+  }
+
+  /* ================= FOOTER ================= */
+  footer {
+    padding: 30px 6% calc(30px + var(--safe-bottom));
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: .64rem;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  footer .logo { font-size: .95rem; }
+
+  /* ================= REVEAL ================= */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .reveal.on { opacity: 1; transform: none; }
+
+  /* ========================================================
+     RESPONSIVE — TABLETTE
+     ======================================================== */
+  @media (min-width: 700px) {
+    .section { padding: 120px 6%; }
+    .about-grid { grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center; }
+    .about-visual { margin: 0; max-width: none; }
+    .duo-members { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .releases-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .g-item { aspect-ratio: 1; }
+    .hero-bottom { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 40px; }
+    .hero-scroll { margin-left: auto; }
+    .section-header {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 30px;
+      margin-bottom: 70px;
+    }
+    .service-row {
+      display: grid;
+      grid-template-columns: 50px 1fr 1fr auto;
+      gap: 30px;
+      align-items: center;
+      padding: 32px 0;
+    }
+    .service-arrow-big { align-self: center; }
+    .release-row {
+      grid-template-columns: 50px 1fr auto auto;
+      gap: 24px;
+      padding: 20px 0;
+    }
+    .rl-tag { display: inline-flex; align-items: center; padding: 5px 12px; border: 1px solid var(--line); border-radius: 100px; font-family: var(--font-mono); font-size: .6rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .event-row {
+      display: grid;
+      grid-template-columns: 110px 1fr auto auto;
+      gap: 30px;
+      align-items: center;
+      padding: 28px 0;
+    }
+    .event-book { align-self: center; }
+    .player-panel { padding: 30px; }
+    .player-panel-head { flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; }
+  }
+
+  /* ========================================================
+     RESPONSIVE — DESKTOP
+     ======================================================== */
+  @media (min-width: 1024px) {
+    .nav-links, .nav-time, .btn-booker { display: flex; }
+    .burger { display: none; }
+    .hero {
+      padding: calc(var(--nav-h) + 60px) 5% 60px;
+    }
+    .hero-title { letter-spacing: -3px; }
+    .section { padding: 160px 5%; }
+    .releases-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .gallery {
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 140px;
+      gap: 20px;
+    }
+    .g-item { aspect-ratio: auto; }
+    .g1 { grid-column: span 6; grid-row: span 3; }
+    .g2 { grid-column: span 3; grid-row: span 2; }
+    .g3 { grid-column: span 3; grid-row: span 2; }
+    .g4 { grid-column: span 3; grid-row: span 2; }
+    .g5 { grid-column: span 3; grid-row: span 2; }
+    .g-cap {
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all .4s;
+    }
+    .g-item:hover .g-cap { transform: translateY(0); opacity: 1; }
+    .g-item:hover { border-color: var(--gold); }
+    .service-row:hover { padding-left: 30px; }
+    .service-row:hover .service-arrow-big {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+      transform: rotate(-45deg);
+    }
+    .service-row:hover .service-name {
+      background: var(--grad-gold);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .release-row:hover { padding-left: 24px; }
+    .release-row:hover .rl-title { color: var(--gold); }
+    .release-row:hover .rl-arrow { color: var(--gold); transform: translateX(4px); }
+    .release:hover { transform: translateY(-4px); }
+    .release:hover .release-play { transform: scale(1.05); }
+    .event-row:hover .event-book { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+    .social:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); transform: translateY(-2px); }
+    .contact-email:hover { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+    .btn-booker:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212,175,122,.35); }
+    .menu-list a:hover { color: var(--gold); }
+    .player-link:hover { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+  }
+
+  /* ========================================================
+     MODE PAYSAGE MOBILE (rotation)
+     ======================================================== */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+      min-height: auto;
+      padding: 100px 5% 40px;
+    }
+    .hero-title { font-size: clamp(2rem, 8vw, 4rem); }
+    .pre-logo { font-size: 3rem; }
+  }
+
+  /* ========================================================
+     REDUCED MOTION (accessibilité)
+     ======================================================== */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ========================================================
+     ÉCRANS HAUTE DENSITÉ (retina)
+     ======================================================== */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-title .outline { -webkit-text-stroke: 1px var(--gold); }
+  }
+</style>
+</head>
+<body class="loading">
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="pre-top">
+    <span>Levon & Dinato</span>
+    <span>EST. 2012 — FR</span>
+  </div>
+  <div class="pre-center">
+    <div class="pre-logo">
+      <span class="grad">Funky</span><br>House
+    </div>
+  </div>
+  <div class="pre-bottom">
+    <span>Chargement</span>
+    <div class="pre-bar"><span id="preBar"></span></div>
+    <span class="pre-counter"><span id="preCount">00</span></span>
+  </div>
+</div>
+
+<!-- CURSEUR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follow" id="cursorFollow">Voir</div>
+
+<!-- GRAIN -->
+<div class="grain"></div>
+
+<!-- SCROLL PROGRESS -->
+<div class="progress" id="progress"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#" class="logo">
+    <span class="logo-dot"></span>
+    Levon & Dinato
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#about">Duo</a></li>
+    <li><a href="#services">Prestations</a></li>
+    <li><a href="#listen">Écouter</a></li>
+    <li><a href="#releases">Releases</a></li>
+    <li><a href="#events">Dates</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <span class="nav-time" id="navTime">PARIS — 00:00</span>
+    <a href="#contact" class="btn-booker">
+      <span>Booker</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MENU FULLSCREEN -->
+<div class="menu" id="menu">
+  <ul class="menu-list">
+    <li><a href="#about"><span>01</span>Le Duo</a></li>
+    <li><a href="#services"><span>02</span>Prestations</a></li>
+    <li><a href="#listen"><span>03</span>Écouter</a></li>
+    <li><a href="#releases"><span>04</span>Releases</a></li>
+    <li><a href="#events"><span>05</span>Dates</a></li>
+    <li><a href="#contact"><span>06</span>Contact</a></li>
+  </ul>
+  <div class="menu-footer">
+    <a href="mailto:contact@levondinato.com">contact@levondinato.com</a>
+    <span>Paris — Worldwide</span>
+    <span>© 2026</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata">
+    <source src="background.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-top">
+    <div class="live"><span></span> Nouveaux remixes 2025</div>
+    <div>47.2184° N / 1.5536° W</div>
+  </div>
+
+  <h1 class="hero-title" id="heroTitle">
+    <span class="line" data-text="Funky"></span>
+    <span class="line" data-text="House" data-grad="true"></span>
+    <span class="line" data-text="Duo" data-outline="true"></span>
+  </h1>
+
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      <strong>Levon & Dinato</strong> — Duo électrisant fusionnant Funky House, Nu-Disco, Tech House et Electro Dance. Un son pensé pour les clubs et les festivals.
+    </p>
+
+    <div class="visualizer" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <span class="line-v"></span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Funky House</span><span class="dot"></span>
+    <span class="gold">Nu-Disco</span><span class="dot"></span>
+    <span>Tech House</span><span class="dot"></span>
+    <span class="gold">Electro Dance</span><span class="dot"></span>
+    <span>Groove</span><span class="dot"></span>
+    <span class="gold">Disco</span><span class="dot"></span>
+    <span>Funky</span><span class="dot"></span>
+    <span class="gold">House</span><span class="dot"></span>
+  </div>
+  <div class="marquee-track" aria-hidden="true">
+    <span>Funky House</span><span class="dot"></span>
+    <span class="gold">Nu-Disco</span><span class="dot"></span>
+    <span>Tech House</span><span class="dot"></span>
+    <span class="gold">Electro Dance</span><span class="dot"></span>
+    <span>Groove</span><span class="dot"></span>
+    <span class="gold">Disco</span><span class="dot"></span>
+    <span>Funky</span><span class="dot"></span>
+    <span class="gold">House</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01 — Le Duo</span>
+    <h2>Deux esprits, <span class="grad">un son</span></h2>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <span class="corner-tag">STÉPHANE × LEVON</span>
+      <div class="disc"></div>
+    </div>
+    <div class="about-content reveal">
+      <p>
+        <strong>Levon & Dinato</strong> est un duo électrisant qui fusionne leurs influences uniques pour créer un son reconnaissable et contagieux.
+      </p>
+      <p>
+        Unis par une passion commune pour la <span class="gold">Funky House, la Nu-Disco, la Tech House et l'Electro Dance</span>, ils enflamment les pistes avec des productions conçues pour les clubs et les grands festivals.
+      </p>
+
+      <div class="duo-members">
+        <div class="member">
+          <span class="member-num">/ 01</span>
+          <h4>Stéphane Dinato</h4>
+          <p>Finaliste du Trophée du Meilleur DJ 2012. Sets haute énergie, productions fusionnant vibrations rétro, beats modernes et mélodies captivantes.</p>
+        </div>
+        <div class="member">
+          <span class="member-num">/ 02</span>
+          <h4>Levon Mystik</h4>
+          <p>Artiste polyvalent et créatif. Racines musicales profondes, amour des rythmes vibrants — la dimension qui élève leur son.</p>
+        </div>
+      </div>
+
+      <p>
+        Ensemble, ils livrent des tracks puissantes et groovy avec des lignes de basse entraînantes, des voix chaleureuses et une énergie euphorique.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <b data-count="12">0</b>
+          <span>Années</span>
+        </div>
+        <div class="stat">
+          <b data-count="50" data-suffix="+">0</b>
+          <span>Tracks</span>
+        </div>
+        <div class="stat">
+          <b data-count="100" data-suffix="%">0</b>
+          <span>Vibes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-header reveal">
+    <span class="section-num">02 — Prestations</span>
+    <h2>Ce qu'on <span class="grad">déclenche</span></h2>
+  </div>
+
+  <div class="services-list reveal">
+    <div class="service-row">
+      <span class="service-num">/ 01</span>
+      <div class="service-name">Clubs & Festivals</div>
+      <div class="service-desc">Sets dynamiques, transitions propres, lecture de foule. On enflamme la piste.</div>
+      <div class="service-arrow-big">→</div>
+    </div>
+    <div class="service-row">
+      <span class="service-num">/ 02</span>
+      <div class="service-name">Mariages & Privé</div>
+      <div class="service-desc">Cérémonie, cocktail, dîner et soirée dansante. Une ambiance sur mesure.</div>
+      <div class="service-arrow-big">→</div>
+    </div>
+    <div class="service-row">
+      <span class="service-num">/ 03</span>
+      <div class="service-name">Corporate</div>
+      <div class="service-desc">Soirées d'entreprise, lancements, séminaires et galas premium.</div>
+      <div class="service-arrow-big">→</div>
+    </div>
+    <div class="service-row">
+      <span class="service-num">/ 04</span>
+      <div class="service-name">Production & Remix</div>
+      <div class="service-desc">Tracks originales, remixes et reworks sur mesure pour labels et artistes.</div>
+      <div class="service-arrow-big">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTEN / ÉCOUTER -->
+<section class="section listen-section" id="listen">
+  <div class="section-header reveal">
+    <span class="section-num">03 — Écouter</span>
+    <h2>La <span class="grad">Listening Room</span></h2>
+  </div>
+
+  <div class="reveal">
+    <div class="player-tabs" id="playerTabs">
+      <button class="player-tab active" data-tab="soundcloud" type="button">
+        <span class="tab-dot"></span>
+        SoundCloud
+      </button>
+      <button class="player-tab" data-tab="spotify" type="button">
+        <span class="tab-dot"></span>
+        Spotify
+      </button>
+    </div>
+
+    <div class="player-container">
+      <!-- Panel SoundCloud -->
+      <div class="player-panel active" data-panel="soundcloud">
+        <div class="player-panel-head">
+          <div>
+            <h3>Nos <span class="grad">tracks</span> sur SoundCloud</h3>
+            <p>Tous les remixes, reworks et originaux — en écoute directe</p>
+          </div>
+          <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="player-link">
+            Ouvrir l'app
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <div class="embed-wrap">
+          <iframe
+            width="100%"
+            height="420"
+            scrolling="no"
+            frameborder="no"
+            allow="autoplay"
+            loading="lazy"
+            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/stephane-dinato-806877257&color=%23d4af7a&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true">
+          </iframe>
+        </div>
+
+        <div class="autoplay-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Astuce : tape sur ▶ pour lancer la lecture — tous les tracks s'enchaînent automatiquement</span>
+        </div>
+      </div>
+
+      <!-- Panel Spotify -->
+      <div class="player-panel" data-panel="spotify">
+        <div class="player-panel-head">
+          <div>
+            <h3>Notre <span class="grad">profil</span> sur Spotify</h3>
+            <p>Écoute nos sorties officielles et ajoute-les à tes playlists</p>
+          </div>
+          <a href="https://open.spotify.com/intl-fr/artist/4zRPcTUuUYL9VLqBxDoE5S" target="_blank" rel="noopener" class="player-link">
+            Ouvrir l'app
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <div class="embed-wrap">
+          <iframe
+            style="border-radius: 6px;"
+            src="https://open.spotify.com/embed/artist/4zRPcTUuUYL9VLqBxDoE5S?utm_source=generator&theme=0"
+            width="100%"
+            height="420"
+            frameborder="0"
+            allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <div class="autoplay-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <span>Connecte ton compte Spotify pour sauvegarder nos tracks dans ta bibliothèque</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELEASES -->
+<section class="section" id="releases">
+  <div class="section-header reveal">
+    <span class="section-num">04 — Releases</span>
+    <h2>Dernières <span class="grad">sorties</span></h2>
+  </div>
+
+  <div class="releases-grid reveal">
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="release">
+      <div class="release-cover" style="background: linear-gradient(135deg, #2b1055, #8b5cf6, #d4af7a);"></div>
+      <div class="release-overlay"></div>
+      <div class="release-play">▶</div>
+      <div class="release-info">
+        <span class="release-tag">Remix — 2025</span>
+        <h4>Everybody's Riding</h4>
+        <p>Funky House • Get Down Saturday Night</p>
+      </div>
+    </a>
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="release">
+      <div class="release-cover" style="background: linear-gradient(135deg, #ec4899, #f97316);"></div>
+      <div class="release-overlay"></div>
+      <div class="release-play">▶</div>
+      <div class="release-info">
+        <span class="release-tag">Rework — 2025</span>
+        <h4>Moonlight Shadow</h4>
+        <p>Nu-Disco • Mike Oldfield</p>
+      </div>
+    </a>
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="release">
+      <div class="release-cover" style="background: linear-gradient(135deg, #22d3ee, #0ea5e9);"></div>
+      <div class="release-overlay"></div>
+      <div class="release-play">▶</div>
+      <div class="release-info">
+        <span class="release-tag">Rework — 2025</span>
+        <h4>Give Me a Sign</h4>
+        <p>Electro Dance • Remady ft. Manu-L</p>
+      </div>
+    </a>
+    <a href="https://open.spotify.com/intl-fr/artist/4zRPcTUuUYL9VLqBxDoE5S" target="_blank" rel="noopener" class="release">
+      <div class="release-cover" style="background: linear-gradient(135deg, #d4af7a, #84cc16);"></div>
+      <div class="release-overlay"></div>
+      <div class="release-play">▶</div>
+      <div class="release-info">
+        <span class="release-tag">Original</span>
+        <h4>Dance The Night Away</h4>
+        <p>Funky House</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="release-list reveal">
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="release-row">
+      <span class="rl-num">01</span>
+      <div>
+        <div class="rl-title">Unstoppable Groove</div>
+        <div class="rl-sub">Tech House — Original Mix</div>
+      </div>
+      <span class="rl-tag">Original</span>
+      <span class="rl-arrow">→</span>
+    </a>
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="release-row">
+      <span class="rl-num">02</span>
+      <div>
+        <div class="rl-title">Step Into The Light</div>
+        <div class="rl-sub">Nu-Disco — Original Mix</div>
+      </div>
+      <span class="rl-tag">Original</span>
+      <span class="rl-arrow">→</span>
+    </a>
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="release-row">
+      <span class="rl-num">03</span>
+      <div>
+        <div class="rl-title">Come And Set Your Spirit Free</div>
+        <div class="rl-sub">Funky House — Original Mix</div>
+      </div>
+      <span class="rl-tag">Original</span>
+      <span class="rl-arrow">→</span>
+    </a>
+    <a href="https://open.spotify.com/intl-fr/artist/4zRPcTUuUYL9VLqBxDoE5S" target="_blank" rel="noopener" class="release-row">
+      <span class="rl-num">04</span>
+      <div>
+        <div class="rl-title">Let's Go</div>
+        <div class="rl-sub">Electro Dance — Original Mix</div>
+      </div>
+      <span class="rl-tag">Original</span>
+      <span class="rl-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="section" id="events">
+  <div class="section-header reveal">
+    <span class="section-num">05 — Dates</span>
+    <h2>Prochaines <span class="grad">dates</span></h2>
+  </div>
+
+  <div class="events-list reveal">
+    <div class="event-row">
+      <div class="event-date"><b>12</b><span>Juillet</span></div>
+      <div class="event-info">
+        <h3>Club Éclipse</h3>
+        <p>Funky House / Nu-Disco — 23h → 5h</p>
+      </div>
+      <div class="event-loc">Paris, FR</div>
+      <a href="#contact" class="event-book">Billets</a>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><b>20</b><span>Juillet</span></div>
+      <div class="event-info">
+        <h3>Mariage privé</h3>
+        <p>Pop / Funk / Disco</p>
+      </div>
+      <div class="event-loc">Lyon, FR</div>
+      <a href="#contact" class="event-book">Infos</a>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><b>03</b><span>Août</span></div>
+      <div class="event-info">
+        <h3>Festival Sunlight</h3>
+        <p>Mainstage — 22h → minuit</p>
+      </div>
+      <div class="event-loc">Marseille, FR</div>
+      <a href="#contact" class="event-book">Billets</a>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><b>17</b><span>Août</span></div>
+      <div class="event-info">
+        <h3>Private Rooftop Party</h3>
+        <p>Deep House — Sunset Set</p>
+      </div>
+      <div class="event-loc">Ibiza, ES</div>
+      <a href="#contact" class="event-book">Infos</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" id="gallery">
+  <div class="section-header reveal">
+    <span class="section-num">06 — Galerie</span>
+    <h2>Moments <span class="grad">capturés</span></h2>
+  </div>
+
+  <div class="gallery reveal">
+    <div class="g-item g1"><div class="g-inner"></div><div class="g-cap">01 — Live at Club Éclipse</div></div>
+    <div class="g-item g2"><div class="g-inner"></div><div class="g-cap">02 — Sunset Set</div></div>
+    <div class="g-item g3"><div class="g-inner"></div><div class="g-cap">03 — Mainstage</div></div>
+    <div class="g-item g4"><div class="g-inner"></div><div class="g-cap">04 — Backstage</div></div>
+    <div class="g-item g5"><div class="g-inner"></div><div class="g-cap">05 — Rooftop Nights</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <span class="contact-tag">07 — Contact / Booking</span>
+    <h2>
+      Travaille<span class="grad">ons</span><br>
+      <span class="outline">ensemble</span>
+    </h2>
+    <a href="mailto:contact@levondinato.com" class="contact-email">
+      contact@levondinato.com
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+
+  <div class="contact-socials reveal">
+    <a href="https://open.spotify.com/intl-fr/artist/4zRPcTUuUYL9VLqBxDoE5S" target="_blank" rel="noopener" class="social">Spotify</a>
+    <a href="https://soundcloud.com/stephane-dinato-806877257" target="_blank" rel="noopener" class="social">SoundCloud</a>
+    <a href="https://hearthis.at/stephane.dinato/" target="_blank" rel="noopener" class="social">HearThis</a>
+    <a href="#" class="social">Instagram</a>
+    <a href="#" class="social">YouTube</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo"><span class="logo-dot"></span>Levon & Dinato</a>
+  <span>© 2026 — Tous droits réservés</span>
+  <span>Made with 🎧 in France</span>
+</footer>
+
+<script>
+  /* ================= PRELOADER ================= */
+  const preloader = document.getElementById('preloader');
+  const preCount = document.getElementById('preCount');
+  const preBar = document.getElementById('preBar');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 8 + 2;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(() => {
+        preloader.classList.add('done');
+        document.body.classList.remove('loading');
+        document.getElementById('heroTitle').classList.add('on');
+      }, 300);
+    }
+    preCount.textContent = String(Math.floor(progress)).padStart(2, '0');
+    preBar.style.width = progress + '%';
+  }, 80);
+
+  /* ================= HERO SPLIT TEXT ================= */
+  document.querySelectorAll('.hero-title .line').forEach(line => {
+    const text = line.dataset.text;
+    const isGrad = line.dataset.grad;
+    const isOutline = line.dataset.outline;
+    for (let i = 0; i < text.length; i++) {
+      const char = document.createElement('span');
+      char.className = 'char';
+      char.style.setProperty('--i', i);
+      if (isGrad) char.classList.add('grad');
+      else if (isOutline) char.classList.add('outline');
+      else char.classList.add('solid');
+      char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+      line.appendChild(char);
+    }
+  });
+
+  /* ================= PLAYER TABS ================= */
+  const tabs = document.querySelectorAll('.player-tab');
+  const panels = document.querySelectorAll('.player-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.toggle('active', t === tab));
+      panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+    });
+  });
+
+  /* ================= DÉTECTION TACTILE ================= */
+  const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches ||
+                  'ontouchstart' in window ||
+                  navigator.maxTouchPoints > 0;
+
+  /* ================= CURSEUR (desktop uniquement) ================= */
+  if (!isTouch) {
+    const cursor = document.getElementById('cursor');
+    const follow = document.getElementById('cursorFollow');
+    let mx = 0, my = 0, fx = 0, fy = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateFollow() {
+      fx += (mx - fx) * 0.14;
+      fy += (my - fy) * 0.14;
+      follow.style.left = fx + 'px';
+      follow.style.top = fy + 'px';
+      requestAnimationFrame(animateFollow);
+    }
+    animateFollow();
+
+    document.querySelectorAll('a, button, .service-row, .release, .release-row, .event-row, .g-item, .member, .player-tab').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+        follow.classList.add('hover');
+        if (el.classList.contains('g-item') || el.classList.contains('release')) {
+          follow.textContent = 'Voir';
+        } else if (el.classList.contains('release-row') || el.classList.contains('event-row')) {
+          follow.textContent = 'Ouvrir';
+        } else {
+          follow.textContent = '';
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+        follow.classList.remove('hover');
+        follow.textContent = 'Voir';
+      });
+    });
+  }
+
+  /* ================= NAV / PROGRESS ================= */
+  const nav = document.getElementById('nav');
+  const prog = document.getElementById('progress');
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 50);
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        prog.style.width = ((y / Math.max(h, 1)) * 100) + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  /* ================= MENU ================= */
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('menu');
+
+  function toggleMenu(open) {
+    burger.classList.toggle('open', open);
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('loading', open);
+  }
+
+  burger.addEventListener('click', () => {
+    toggleMenu(!menu.classList.contains('open'));
+  });
+
+  document.querySelectorAll('.menu-list a, .menu-footer a').forEach(a => {
+    a.addEventListener('click', () => {
+      toggleMenu(false);
+    });
+  });
+
+  // Fermer le menu si on clique en dehors
+  menu.addEventListener('click', (e) => {
+    if (e.target === menu) toggleMenu(false);
+  });
+
+  /* ================= HEURE PARIS ================= */
+  const navTime = document.getElementById('navTime');
+  function updateTime() {
+    const now = new Date();
+    const opts = { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false };
+    try {
+      navTime.textContent = 'PARIS — ' + now.toLocaleTimeString('fr-FR', opts);
+    } catch(e) {
+      navTime.textContent = 'PARIS — ' + now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+    }
+  }
+  updateTime();
+  setInterval(updateTime, 30000);
+
+  /* ================= REVEAL ================= */
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('on');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach(el => io.observe(el));
+
+  /* ================= COMPTEURS ================= */
+  const counters = document.querySelectorAll('[data-count]');
+  const cio = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.dataset.count;
+        const suffix = el.dataset.suffix || '';
+        let current = 0;
+        const step = target / 50;
+        const update = () => {
+          current += step;
+          if (current < target) {
+            el.textContent = Math.floor(current) + suffix;
+            requestAnimationFrame(update);
+          } else {
+            el.textContent = target + suffix;
+          }
+        };
+        update();
+        cio.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => cio.observe(el));
+
+  /* ================= SMOOTH SCROLL ================= */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id === '#') return;
+      const target = document.querySelector(id);
+      if (target) {
+        e.preventDefault();
+        const offset = 60;
+        const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* ================= VIDÉO — Optimisée mobile ================= */
+  const bgVideo = document.querySelector('.bg-video');
+  if (bgVideo) {
+    // Sur mobile : pause automatique pour économiser les données
+    if (window.innerWidth < 768 || isTouch) {
+      bgVideo.pause();
+      // Tentative de lecture au premier tap de l'utilisateur
+      const tryPlay = () => {
+        bgVideo.play().catch(() => {});
+        document.removeEventListener('touchstart', tryPlay);
+        document.removeEventListener('click', tryPlay);
+      };
+      document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+      document.addEventListener('click', tryPlay, { once: true });
+    } else {
+      bgVideo.play().catch(() => {});
+      bgVideo.playbackRate = 0.85;
+    }
+  }
+
+  /* ================= iOS : 100vh FIX ================= */
+  function setVH() {
+    document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+  }
+  setVH();
+  window.addEventListener('resize', setVH, { passive: true });
+  window.addEventListener('orientationchange', () => {
+    setTimeout(setVH, 200);
+  }, { passive: true });
+
+  /* ================= EVITER LE ZOOM AU DOUBLE-TAP ================= */
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+</script>
+</body>
+</html>
