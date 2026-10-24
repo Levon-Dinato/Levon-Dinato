@@ -27,10 +27,10 @@
     --border: #162536;
     --border-light: #233b54;
     --text: #ffffff;
-    --text-muted: #8c9f98; /* Gris légèrement bleuté */
+    --text-muted: #8c9f98; 
     --text-dark: #556b63;
     
-    /* ✅ Nouveau Bleu Cyan Électrique (matche le logo) */
+    /* ✅ Bleu Cyan Électrique */
     --accent: #00d9ff; 
     --accent-hover: #00b3d9;
     --accent-gradient: linear-gradient(135deg, #00d9ff 0%, #0077ff 100%);
@@ -117,7 +117,6 @@
 
   /* ================= HERO ================= */
   .hero { position: relative; min-height: 90vh; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
-  /* ✅ Filtre vidéo modifié pour tirer vers le bleu */
   .bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.15; filter: grayscale(100%) sepia(100%) hue-rotate(180deg); mix-blend-mode: screen; }
   .hero-inner { padding-top: calc(var(--safe-top) + 120px); padding-bottom: 60px; display: flex; flex-direction: column; align-items: center; text-align: center; }
   .hero-tag { display: inline-block; padding: 6px 12px; border: 1px solid var(--border-light); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--accent); margin-bottom: 24px; background: var(--bg-card); }
@@ -397,10 +396,11 @@
           <h4>Clubs & Festivals</h4>
           <p>Sets dynamiques, transitions propres et énergie communicative. On lit la foule et on enflamme la piste.</p>
         </div>
+        <!-- ✅ REMPLACEMENT DU MARIAGE PAR SOIRÉES PRIVÉES / CLUB -->
         <div class="service-card">
-          <span class="service-icon">💍</span>
-          <h4>Mariages & Privé</h4>
-          <p>Cérémonie, cocktail, dîner et soirée dansante. Une ambiance sur mesure pour le plus beau jour.</p>
+          <span class="service-icon">🥂</span>
+          <h4>Soirées Privées & VIP</h4>
+          <p>Anniversaires, aftershows, soirées privées et événements exclusifs. Une ambiance club sur mesure.</p>
         </div>
         <div class="service-card">
           <span class="service-icon">🏢</span>
@@ -548,7 +548,8 @@
 <section class="contact-section" id="contact">
   <div class="wrapper fade-in">
     <h2>Prêt à enflammer votre scène ?</h2>
-    <p>Disponibles pour clubs, festivals, mariages et événements privés.</p>
+    <!-- ✅ MISE À JOUR DU TEXTE : Plus de mariage, focus club/événement -->
+    <p>Disponibles pour clubs, festivals et événements privés.</p>
     <a href="mailto:djcontrolradiotv1@gmail.com" class="contact-email">
       djcontrolradiotv1@gmail.com &rarr;
     </a>
